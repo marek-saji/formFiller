@@ -1,4 +1,4 @@
-(function fillForms () {
+function ___fillForms () {
     var i = 0;
     $(':input:visible, [id=$=-element]:visible .pencil-element')
       .not('[type=checkbox], [type=submit]')
@@ -17,4 +17,5 @@
           })
     .trigger('change')
     .trigger('blur.formPencil')
-}());
+};
+___fillForms();
