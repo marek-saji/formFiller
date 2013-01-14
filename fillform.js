@@ -1,5 +1,14 @@
 function ___fillForms () {
-    var i = 0;
+    var $,
+        i = 0;
+        
+    if (typeof jQuery === "undefined") {
+        alert("Me no works with no jQuery.");
+        return;
+    } else {
+        $ = jQuery;
+    }
+    
     $(':input:visible, [id=$=-element]:visible .pencil-element')
       .not('[type=checkbox], [type=submit]')
           .each(function () {
@@ -18,4 +27,5 @@ function ___fillForms () {
     .trigger('change')
     .trigger('blur.formPencil')
 };
+
 ___fillForms();
