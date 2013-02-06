@@ -10,18 +10,22 @@ function ___fillForms () {
     }
     
     $(':input:visible, [id=$=-element]:visible .pencil-element')
-        .not('[type=submit]')
+        .not('[type=submit], [type=file]')
             .each(function () {
                 var $this = $(this),
                     $label;
                 if ($this.is('select')) {
                     // select 2nd value as first may be something like "Choose"
-                    $this.val($this.children().eq(1).val());
+                    if (1 < $this.children().length && 0 === $this.children(':selected').index()) {
+                        $this.val($this.children().eq(1).val());
+                    }
                 } else if ($this.is('[type=radio]')) {
+                    // select only if first radio of that name in it's form
                     if (0 === $this.closest('form').find('[type=radio][name='+$this.attr('name')+']:checked').length) {
                         $this.prop('checked', true);
                     }
                 } else if ($this.is('[type=checkbox]')) {
+                    // check ALL THE checkboxes
                     $this.prop('checked', true);
                 } else if ("" === $this.val()) {
                     if ($this.is('[type=email]')) {
