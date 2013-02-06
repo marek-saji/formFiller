@@ -1,5 +1,5 @@
 (typeof window.___formFiller !== "undefined")
-?   window.___formFiller.ready()
+?   window.___formFiller.show()
 :   (function (d) {
         var s = d.createElement('script')
         s.src = 'https://gist.github.com/raw/4529355/formfiller.js'
