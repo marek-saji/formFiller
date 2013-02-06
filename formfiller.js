@@ -165,14 +165,21 @@ window.___formFiller = (function (document, undefined) {
         }
         values = JSON.parse(values);
         _forEach.call(form.querySelectorAll("select, input:not([type=submit]):not([type=file]):not([type=checkbox]):not([type=radio]), textarea"), function (element) {
-            element.value = values[element.name];
+            if (element.value !== values[element.name]) {
+                element.value = values[element.name];
+                _afterChange(element);
+            }
         });
         _forEach.call(form.querySelectorAll("input[type=checkbox]"), function (element) {
-            element.checked = !!values[element.name];
+            if (element.checked !== !!values[element.name]) {
+                element.checked = !!values[element.name];
+                _afterChange(element);
+            }
         });
         _forEach.call(form.querySelectorAll("input[type=radio]"), function (element) {
             if (values[element.name] === element.value) {
-                element.checked = true;;
+                element.checked = true;
+                _afterChange(element);
             }
         });
     };
