@@ -13,6 +13,7 @@ function ___fillForms () {
         .not('[type=submit], [type=file]')
             .each(function () {
                 var $this = $(this),
+                    prevValue = $this.val(),
                     $label;
                 if ($this.is('select')) {
                     // select 2nd value as first may be something like "Choose"
@@ -41,9 +42,11 @@ function ___fillForms () {
                     }
                 }
                 i++;
+                
+                if ($this.val() !== prevValue) {
+                    $this.trigger('change').trigger('blur');
+                }
             })
-    .trigger('change')
-    .trigger('blur.formPencil')
 };
 
 ___fillForms();
