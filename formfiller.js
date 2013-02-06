@@ -77,14 +77,20 @@ window.___formFiller = (function (document, undefined) {
         // text inputs
         _forEach.call(form.querySelectorAll("input:not([type=submit]):not([type=file]):not([type=checkbox]):not([type=radio]), textarea"), function (element) {
             var previousValue = element.value,
+                valueProperty = "value",
                 newValue,
                 is = element.classList.contains.bind(element.classList),
+                date,
                 label;
+
             _i++;
-            // TODO massive if-else sucks.
+
             if ("" === previousValue) {
                 if ("date" === element.type) {
-                    // TODO
+                    valueProperty = "valueAsDate";
+                    date = new Date;
+                    date.setDate(date.getDate() - _i);
+                    newValue = date; 
                 } else if ("number" === element.type) {
                     newValue = _i; // TODO what about decimal part?
                 } else if (is("type_Float") || is("type_Price") || is("type_PriceWithGross")) { // TODO don't use classes
@@ -97,7 +103,7 @@ window.___formFiller = (function (document, undefined) {
                 }
                 
                 if (newValue !== previousValue) {
-                    element.value = newValue;
+                    element[valueProperty] = newValue;
                     _afterChange(element);
                 }
             }
