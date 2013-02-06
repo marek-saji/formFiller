@@ -3,7 +3,6 @@ window.___formFiller = (function (document, undefined) {
     // public methods
     var show,
         hide,
-        ready,
         fillForm,
         storeForm,
         restoreForm;
@@ -67,16 +66,6 @@ window.___formFiller = (function (document, undefined) {
         var context;
         context = document.getElementById("___formFillerUI");
         context && context.remove();
-    };
-    
-    
-    /**
-     * Ready callback.
-     */
-    ready = function () {
-        if (typeof window.___formFillerReadyCallback === "function") {
-            window.___formFillerReadyCallback();
-        }
     };
     
     
@@ -245,7 +234,6 @@ window.___formFiller = (function (document, undefined) {
     return {
         show : show,
         hide : hide,
-        ready : ready,
         fillForm : fillForm,
         storeForm : storeForm,
         restoreForm : restoreForm
