@@ -35,7 +35,9 @@ window.___formFiller = (function (document, undefined) {
         document.body.appendChild(context);
 
         _forEach.call(document.querySelectorAll("form"), function (form) {
-            var ident = _getFormIdent(form);
+            var ident = _getFormIdent(form),
+                name = document.createElement('a'),
+                outline = form.style.outline;
 
             wrapper = document.createElement('li');
             context.appendChild(wrapper);
@@ -53,7 +55,20 @@ window.___formFiller = (function (document, undefined) {
                 }, true);
             });
 
-            wrapper.appendChild(document.createTextNode(ident));
+            name.textContent = ident;
+            name.href = "#";
+            name.addEventListener("mouseover", function () {
+                form.style.outline = "red solid thick";
+            });
+            name.addEventListener("mouseout", function () {
+                form.style.outline = outline;
+            });
+            name.addEventListener("click", function (e) {
+                form.scrollIntoView();
+                e.preventDefault();
+            });
+
+            wrapper.appendChild(name);
         });
 
      };
