@@ -25,7 +25,8 @@ window.___formFiller = (function (document, undefined) {
         var forms = {},
             el,
             wrapper,
-            context;
+            context,
+            close = document.createElement('button');
 
         ___formFiller.hide();
 
@@ -70,6 +71,12 @@ window.___formFiller = (function (document, undefined) {
 
             wrapper.appendChild(name);
         });
+
+        close.textContent = "do nothing";
+        close.addEventListener("click", function () {
+            ___formFiller.hide();
+        });
+        context.appendChild(document.createElement('li').appendChild(close).parentNode);
 
      };
 
