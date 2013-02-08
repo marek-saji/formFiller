@@ -223,7 +223,8 @@ window.___formFiller = (function (document, undefined) {
      * @returns {String} Looks like CSS selector format
      */
     _getFormIdent = function (form) {
-        var ident = "";
+        var ident = "",
+            action = form.getAttribute('action') || form.action;
         if (form.name) {
             ident += "[name=" + form.name + "]";
         }
@@ -233,8 +234,8 @@ window.___formFiller = (function (document, undefined) {
         if (form.className) {
             ident += "." + form.className.trim().replace(/\s+/g, ".");
         }
-        if (form.action) {
-            ident += "[action=" + form.action + "]";
+        if (action) {
+            ident += "[action=" + action + "]";
         }
         return ident;
     };
