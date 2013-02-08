@@ -65,7 +65,9 @@ window.___formFiller = (function (document, undefined) {
     hide = function () {
         var context;
         context = document.getElementById("___formFillerUI");
-        context && context.remove();
+        if (context) {
+            context.remove();
+        }
     };
 
 
@@ -88,7 +90,7 @@ window.___formFiller = (function (document, undefined) {
             if ("" === previousValue) {
                 if ("date" === element.type) {
                     valueProperty = "valueAsDate";
-                    date = new Date;
+                    date = new Date();
                     date.setDate(date.getDate() - _i);
                     newValue = date;
                 } else if ("number" === element.type) {
@@ -177,8 +179,9 @@ window.___formFiller = (function (document, undefined) {
             }
         });
         _forEach.call(form.querySelectorAll("input[type=checkbox]"), function (element) {
-            if (element.checked !== !!values[element.name]) {
-                element.checked = !!values[element.name];
+            var checked = !!values[element.name];
+            if (element.checked !== checked) {
+                element.checked = checked;
                 _afterChange(element);
             }
         });
@@ -237,8 +240,12 @@ window.___formFiller = (function (document, undefined) {
                 .trigger("blur")
                 .trigger("change");
         } else {
-            element.onblur   && element.onblur();
-            element.onchange && element.onchange();
+            if (typeof element.onblur === "function") {
+                element.onblur();
+            }
+            if (typeof element.onchange === "function") {
+                element.onchange();
+            }
         }
     };
 
