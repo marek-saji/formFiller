@@ -77,7 +77,7 @@ window.___formFiller = (function (document, undefined) {
      */
     fillForm = function (form) {
         // text inputs
-        _forEach.call(form.querySelectorAll("input:not([type=submit]):not([type=file]):not([type=checkbox]):not([type=radio]), textarea"), function (element) {
+        _forEach.call(form.querySelectorAll("input:not([type=submit]):not([type=hidden]):not([type=file]):not([type=checkbox]):not([type=radio]), textarea"), function (element) {
             var previousValue = element.value,
                 valueProperty = "value",
                 newValue,
