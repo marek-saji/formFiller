@@ -1,23 +1,23 @@
 window.___formFiller = (function (document, undefined) {
-    
+
     // public methods
     var show,
         hide,
         fillForm,
         storeForm,
         restoreForm;
-        
+
     // private methods
     var _getFormIdent,
         _afterChange;
-    
+
     // helpers
     var _forEach = Array.prototype.forEach;
-    
+
     // private properties
     var _i = 0;
-        
-        
+
+
     /**
      * Show the UI
      */
@@ -26,20 +26,20 @@ window.___formFiller = (function (document, undefined) {
             el,
             wrapper,
             context;
-            
+
         ___formFiller.hide();
-        
+
         context = document.createElement('ol');
         context.id = "___formFillerUI";
         context.setAttribute("style",  "text-align: left; font-size: 1rem; position: fixed; top:1em; left: 1em; right: 1em; padding: 1em; background-color: white;");
         document.body.appendChild(context);
-            
+
         _forEach.call(document.querySelectorAll("form"), function (form) {
             var ident = _getFormIdent(form);
-            
+
             wrapper = document.createElement('li');
             context.appendChild(wrapper);
-            
+
             ["fill", "store", "restore"].forEach(function (action) {
                 el = document.createElement('button');
                 el.innerText = action;
@@ -52,13 +52,13 @@ window.___formFiller = (function (document, undefined) {
                     ___formFiller.hide();
                 }, true);
             });
-            
+
             wrapper.appendChild(document.createTextNode(ident));
         });
-        
+
      };
-     
-     
+
+
      /**
       * Hide the UI
       */
@@ -67,8 +67,8 @@ window.___formFiller = (function (document, undefined) {
         context = document.getElementById("___formFillerUI");
         context && context.remove();
     };
-    
-    
+
+
     /**
      * Fill form with garbage data
      * @param {HTMLFormElement} form
@@ -90,7 +90,7 @@ window.___formFiller = (function (document, undefined) {
                     valueProperty = "valueAsDate";
                     date = new Date;
                     date.setDate(date.getDate() - _i);
-                    newValue = date; 
+                    newValue = date;
                 } else if ("number" === element.type) {
                     newValue = _i; // TODO what about decimal part?
                 } else if (is("type_Float") || is("type_Price") || is("type_PriceWithGross")) { // TODO don't use classes
@@ -101,7 +101,7 @@ window.___formFiller = (function (document, undefined) {
                     label = form.querySelector("label[for=" + element.name + "]");
                     newValue = "test ☆ " + (label ? label.textContent : _i);
                 }
-                
+
                 if (newValue !== previousValue) {
                     element[valueProperty] = newValue;
                     _afterChange(element);
@@ -135,8 +135,8 @@ window.___formFiller = (function (document, undefined) {
             }
         });
     };
-    
-    
+
+
     /**
      * Save form values for future
      * @param {HTMLFormElement} form
@@ -157,8 +157,8 @@ window.___formFiller = (function (document, undefined) {
         });
         localStorage.setItem(storageKey, JSON.stringify(values));
     };
-    
-    
+
+
     /**
      * Restore previously saved form values
      * @param {HTMLFormElement} form
@@ -189,11 +189,11 @@ window.___formFiller = (function (document, undefined) {
             }
         });
     };
-    
-    
+
+
     /**
      * Get form identifier
-     * 
+     *
      * @param {String} form
      * @returns {String} Looks like CSS selector format
      */
@@ -213,8 +213,8 @@ window.___formFiller = (function (document, undefined) {
         }
         return ident;
     };
-    
-    
+
+
     /**
      * Get storage key used to store forms' values
      * @param {HTMLFormElement} form
@@ -223,11 +223,11 @@ window.___formFiller = (function (document, undefined) {
     _getFormStorageKey = function (form) {
         return "___formFiller:form:values:" + _getFormIdent(form);
     };
-    
-    
+
+
     /**
      * After element's value change callback
-     * 
+     *
      * Trigger `blur` and `change` events. If jQuery is available, it will be used.
      * @param {HTMLElement} element
      */
@@ -238,11 +238,11 @@ window.___formFiller = (function (document, undefined) {
                 .trigger("change");
         } else {
             element.onblur   && element.onblur();
-            element.onchange && element.onchange();  
+            element.onchange && element.onchange();
         }
     };
-    
-    
+
+
     // export
     return {
         show : show,
@@ -251,7 +251,7 @@ window.___formFiller = (function (document, undefined) {
         storeForm : storeForm,
         restoreForm : restoreForm
     };
-    
+
 }(document));
 
 window.___formFiller.show();
